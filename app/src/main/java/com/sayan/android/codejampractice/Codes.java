@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Codes {
 
+    private static char[] chars;
+
     public static void startClapping(List<IndividualAudience> audience, int numOfClappers){
         Log.d("startClapping: ", "Called");
         boolean isNumOfClappersIncreased = false;
@@ -63,5 +65,43 @@ public class Codes {
             }
         }
         return shynessLevels;
+    }
+
+    public static void calculateMinSalt(String input, int maxShyness) {
+        int numOfSalt = 0;
+        char[] chars = input.toCharArray();
+        for (int i = 0; i <= maxShyness; i++) {
+            char aChar = chars[i];
+            if (i == 0){
+                if (aChar == '0'){
+                    chars[i] = '1';
+                    numOfSalt = 1;
+                    Codes.chars = chars;
+                }
+            }else {
+                if (!checkShouldClap(i, numOfSalt, maxShyness, chars)){
+                    break;
+                }
+            }
+        }
+    }
+
+    private static boolean checkShouldClap(int i, int numOfSalt, int maxShyness, char[] chars) {
+        Codes.chars = chars;
+        int shynessLevel = i;
+        int numOfPeopleAlreadyClapping = 0;
+        if (i == 0){
+            return false;
+        }
+        for (int j = i - 1; j >= 0 ; j--) {
+            int numOfPeopleHavingCurrentShyness = Integer.parseInt(String.valueOf(chars[j]));
+            numOfPeopleAlreadyClapping = numOfPeopleAlreadyClapping + numOfPeopleHavingCurrentShyness;
+        }
+        if (numOfPeopleAlreadyClapping >= shynessLevel){
+            return true;
+        }else {
+            int shynessDifferenece = shynessLevel - numOfPeopleAlreadyClapping;
+            return false;
+        }
     }
 }

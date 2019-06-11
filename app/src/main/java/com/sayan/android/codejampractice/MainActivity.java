@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             else audiences.add(new IndividualAudience(i + 1));
         }
 //        Codes.startClapping(audiences, 0);
-        Codes.checkSalt("010234201");
+        Codes.calculateMinSalt("010234201", 8);
         for (IndividualAudience individual :
                 audiences) {
             Log.d("list: ", "" + individual);
